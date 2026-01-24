@@ -10,19 +10,22 @@ def main():
     while True:
         print("Pick your option: ")
         print("1 - Generate a password")
+        print("2 - Login and view passwords")
         print("99 - exit")
-        try:
-            choice = int(input())
-            if choice == 1:
-                length, upper, lower, numbers, symbols, min_numbers, min_symbols = get_parameters()
-                password = generate_password(length, upper, lower, numbers, symbols, min_numbers, min_symbols)
-                output_password(password)
-            elif choice == 99:
-                break 
-            else:
-                print("Thats not an option try again")
-        except ValueError:
-            print("Enter a valid digit, try again")
+        #try:
+        choice = int(input())
+        if choice == 1:
+            length, upper, lower, numbers, symbols, min_numbers, min_symbols = get_parameters()
+            password = generate_password(length, upper, lower, numbers, symbols, min_numbers, min_symbols)
+            output_password(password)
+        elif choice == 2:
+            login_menu()
+        elif choice == 99:
+            break 
+        else:
+            print("Thats not an option try again")
+    #except ValueError:
+            #print("Enter a valid digit, try again")
 def get_parameters():
     while True:
         min_characters = 0
@@ -174,26 +177,33 @@ def generate_password(length, upper, lower, numbers, symbols, min_numbers, min_s
 def output_password(password):
     print (f"Your password is {password}")
 def login_menu():
-    with open("user_info.txt","a","utf-8") as f:
-        user_info = f.read().splitlines()
     print("Enter your option")
     print("1 - Returning user")
     print("2 - New user")
     try:
         choice = int(input())
         if choice == 1:
-            user_login(user_info)
+            pass
+            #user_login(user_info)
         elif choice == 2:
-            username,password = new_user()
+            new_user()
         else:
             print("That's not an option, try again")
     except ValueError:
         print("Enter a valid digit, try again")
-def user_login(user_info):
+def user_login():
     pass
-def new_user(user_info):
+def new_user():
     username = ""
     password = ""
-    return username,password
+    user = input("Enter your username: ")
+    passwd = input("Enter your password: ")
+    user_check(user)
+    with open(BASE_DIR / "user_info.txt","a",encoding="utf-8") as f:
+        f.write(f"\n{user},{passwd}")
+    with open(BASE_DIR / f"{user}-passwords.txt","w",encoding="utf-8") as f:
+        f.write
+def user_check(user):
+    pass
 if __name__ == "__main__":
     main()
